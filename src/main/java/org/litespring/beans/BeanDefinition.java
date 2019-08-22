@@ -8,5 +8,14 @@ package org.litespring.beans;
  * @Version:
  */
 public interface BeanDefinition {
+	public static final String SCOPE_DEFAULT = "";
+	public static final String SCOPE_SINGLETON = "singleton";
+	public static final String SCOPE_PROTOTYPE = "prototype";
+	public boolean isSingleton();
+	public boolean isPrototype();
+	String getScope();
+	void setScope(String scope);
+
 	String getBeanClassName();
+
 }

@@ -24,7 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Modified By:
  * @Version:
  */
-public class DefaultBeanFactory implements ConfigurableBeanFactory,BeanDefinitionRegistry {
+public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
+		implements ConfigurableBeanFactory,BeanDefinitionRegistry {
 	private final Map<String, BeanDefinition> beanDefinationMap = new ConcurrentHashMap<>();
 	private ClassLoader beanClassLoader;
 
@@ -47,6 +48,19 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory,BeanDefinitio
 		if (bd == null) {
 			throw new BeanCreationException("Bean definition dose not exist");
 		}
+		// 判断,如果是单例,直接get 如果不是,则创建,并注册到map
+		if (bd.isSingleton()) {
+			Object bean = this.getSingleton(beanId);
+			if (bean == null) {
+				bean = createBean(bd);
+				this.registerSingleton(beanId, bean);
+			}
+			return bean;
+		}
+		return createBean(bd);
+	}
+
+	private Object createBean(BeanDefinition bd) {
 		ClassLoader cl = this.getBeanClassLoader();
 		String beanClassName = bd.getBeanClassName();
 		Class<?> clz = null;
