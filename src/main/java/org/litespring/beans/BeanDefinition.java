@@ -1,5 +1,7 @@
 package org.litespring.beans;
 
+import java.util.List;
+
 /**
  * @Author: zhenglc
  * @Descriptions:
@@ -18,4 +20,5 @@ public interface BeanDefinition {
 
 	String getBeanClassName();
 
+	List<PropertyValue> getPropertyValues();
 }
