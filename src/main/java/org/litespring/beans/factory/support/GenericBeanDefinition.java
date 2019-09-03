@@ -1,6 +1,7 @@
 package org.litespring.beans.factory.support;
 
 import org.litespring.beans.BeanDefinition;
+import org.litespring.beans.ConstructorArgument;
 import org.litespring.beans.PropertyValue;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 	private String scope = SCOPE_DEFAULT;
 
 	List<PropertyValue> propertyValues = new ArrayList<>();
+	private ConstructorArgument constructorArgument = new ConstructorArgument();
 
 	public GenericBeanDefinition(String id, String beanClassName) {
 		this.id = id;
@@ -59,5 +61,14 @@ public class GenericBeanDefinition implements BeanDefinition {
 		this.prototype = SCOPE_PROTOTYPE.equals(scope);
 	}
 
+	@Override
+	public ConstructorArgument getConstructorArgument() {
+		return this.constructorArgument;
+	}
+
+	@Override
+	public String getID() {
+		return this.id;
+	}
 
 }
